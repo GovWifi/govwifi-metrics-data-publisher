@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "metpub"
+version = "0.1.0"
+description = "GovWifi Metrics Data Publisher"
+authors = [
+    {name = "Oisin Mulvihill"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pandas>=2.0.0",
+    "pantab>=3.0.0",
+    "tableauserverclient>=0.25",
+    "python-dotenv>=1.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "black>=23.0",
+    "flake8>=6.0",
+    "isort>=5.0",
+]
+
+[project.scripts]
+metpub = "metpub.cli:main"
+
+[tool.setuptools]
+packages = ["metpub"]
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+
+[tool.isort]
+profile = "black"
+line_length = 88
