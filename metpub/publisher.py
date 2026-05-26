@@ -45,4 +45,4 @@ def publish_hyper_extract(
             new_datasource, hyper_path, publish_mode
         )
 
-        print(f"Success! Datasource published with ID: {published_datasource.id}")
+        print(f"Success! Datasource published with ID: " f"{published_datasource.id}")
