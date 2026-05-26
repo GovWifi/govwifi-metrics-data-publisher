@@ -24,10 +24,12 @@ dev = [
     "black>=23.0",
     "flake8>=6.0",
     "isort>=5.0",
+    "pytest-cov>=4.0",
 ]
 
 [project.scripts]
 metpub = "metpub.cli:main"
+recover = "metpub.recover:main"
 
 [tool.setuptools]
 packages = ["metpub"]
@@ -39,3 +41,7 @@ target-version = ['py311']
 [tool.isort]
 profile = "black"
 line_length = 88
+
+[tool.pytest.ini_options]
+addopts = "--cov=metpub --cov-fail-under=88"
+testpaths = ["tests"]

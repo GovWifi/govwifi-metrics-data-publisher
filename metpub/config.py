@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 from dotenv import load_dotenv
 
@@ -7,28 +8,52 @@ load_dotenv()
 
 
 class Config:
-    def __init__(self):
-        # Optional overrides
-        self.JSON_FILE_PATH = os.environ.get("JSON_FILE_PATH", "2026_govwifi_data.json")
-        self.HYPER_FILE_PATH = os.environ.get(
-            "HYPER_FILE_PATH", "2026_govwifi_data.hyper"
-        )
-        # Required Tableau Cloud configurations
-        self.TOKEN_NAME = self._get_required("TOKEN_NAME")
-        self.TOKEN_VALUE = self._get_required("TOKEN_VALUE")
-        self.SITE_ID = self._get_required("SITE_ID")
-        self.SERVER_URL = self._get_required("SERVER_URL")
-        self.PROJECT_NAME = self._get_required("PROJECT_NAME")
-        self.DATASOURCE_NAME = self._get_required("DATASOURCE_NAME")
 
-        # Optional: table name for the Hyper file (defaults to "Extract")
-        #
-        # Tableau has a standard convention for single-table extracts: it
-        # expects the table to be named Extract. When you use this default name,
-        # Tableau maps it perfectly on every overwrite without regenerating the
-        # logical metadata, keeping your auto-generated fields stable.
-        #
-        self.TABLE_NAME = os.environ.get("TABLE_NAME", "Extract")
+    @property
+    def JSON_FILE_PATH(self) -> str:
+        current_year = datetime.now().year
+        return os.environ.get("JSON_FILE_PATH", f"{current_year}_govwifi_data.json")
+
+    @property
+    def HYPER_FILE_PATH(self) -> str:
+        current_year = datetime.now().year
+        return os.environ.get("HYPER_FILE_PATH", f"{current_year}_govwifi_data.hyper")
+
+    @property
+    def TABLE_NAME(self) -> str:
+        return os.environ.get("TABLE_NAME", "Extract")
+
+    @property
+    def TOKEN_NAME(self) -> str:
+        return self._get_required("TOKEN_NAME")
+
+    @property
+    def TOKEN_VALUE(self) -> str:
+        return self._get_required("TOKEN_VALUE")
+
+    @property
+    def SITE_ID(self) -> str:
+        return self._get_required("SITE_ID")
+
+    @property
+    def SERVER_URL(self) -> str:
+        return self._get_required("SERVER_URL")
+
+    @property
+    def PROJECT_NAME(self) -> str:
+        return self._get_required("PROJECT_NAME")
+
+    @property
+    def DATASOURCE_NAME(self) -> str:
+        return self._get_required("DATASOURCE_NAME")
+
+    @property
+    def METRICS_API_URL(self) -> str:
+        return self._get_required("METRICS_API_URL")
+
+    @property
+    def METRICS_API_KEY(self) -> str:
+        return self._get_required("METRICS_API_KEY")
 
     def _get_required(self, key: str) -> str:
         value = os.environ.get(key)

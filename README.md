@@ -52,9 +52,13 @@ The application uses environment variables for configuration, which can be store
 | **`SERVER_URL`** | *Required* | - | The base URL of the Tableau Cloud server (e.g., `https://prod-uk-a.online.tableau.com`). |
 | **`PROJECT_NAME`** | *Required* | - | Target project folder in Tableau Cloud where the data source resides. |
 | **`DATASOURCE_NAME`**| *Required* | - | The name of the published Data Source in Tableau Cloud. |
-| **`JSON_FILE_PATH`** | *Optional* | `2026_govwifi_data.json` | Path to the source JSON metrics file. |
-| **`HYPER_FILE_PATH`**| *Optional* | `2026_govwifi_data.hyper`| Destination path for the generated `.hyper` extract. |
+| **`JSON_FILE_PATH`** | *Optional* | `<year>_govwifi_data.json` | Path to the source JSON metrics file. Dynamically defaults to using the current/resolved year. |
+| **`HYPER_FILE_PATH`**| *Optional* | `<year>_govwifi_data.hyper`| Destination path for the generated `.hyper` extract. Dynamically defaults to using the current calendar year. |
 | **`TABLE_NAME`** | *Optional* | `Extract` | The table name inside the Hyper extract. **Must be set to `Extract` for standard single-table extracts (see important note below).** |
+| **`METRICS_API_URL`**| *Required (Recovery)* | - | The base URL of the GovWifi Metrics API. |
+| **`METRICS_API_KEY`**| *Required (Recovery)* | - | Bearer token key for the GovWifi Metrics API. |
+| **`RECOVER_YEAR`**   | *Optional* | *Current calendar year* | Year to recover metrics data for. |
+| **`RECOVER_MONTH`**  | *Optional* | - | Optional month (1-12) to recover metrics data for. |
 
 > [!IMPORTANT]
 > **Tableau Single-Table Extract Naming Requirement**: 
@@ -136,6 +140,33 @@ You can run the publishing pipeline locally using several methods:
    ```bash
    .venv/bin/python -m metpub.cli
    ```
+
+### Metrics Data Recovery
+
+You can download and save metrics data for a specific year or month using the `recover` CLI command.
+
+#### 1. Ingesting Metrics Data via `recover`
+To recover data for the current calendar year (default output is `<current_year>_govwifi_data.json`):
+```bash
+source .venv/bin/activate
+recover
+```
+
+To recover data for a specific year and month:
+```bash
+recover --year 2025 --month 5
+```
+This streams the recovery JSON data directly from the metrics endpoint. 
+- If a month is provided, the output file defaults to `<year>_<month:02d>_govwifi_data.json` (e.g. `2025_05_govwifi_data.json`).
+- If no month is provided, the output file defaults to `<year>_govwifi_data.json` (e.g. `2025_govwifi_data.json`).
+- You can override this output file location using the `JSON_FILE_PATH` environment variable.
+
+#### 2. Publishing Recovered Data via `metpub`
+Once the recovery JSON data is downloaded, you can publish it to Tableau Cloud by passing the downloaded file path to `metpub`:
+```bash
+# This reads from the downloaded file and publishes it
+JSON_FILE_PATH=2025_05_govwifi_data.json HYPER_FILE_PATH=2025_05_govwifi_data.hyper metpub
+```
 
 ### Docker Execution
 
