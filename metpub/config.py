@@ -43,7 +43,6 @@ class Config:
     def PROJECT_NAME(self) -> str:
         return self._get_required("PROJECT_NAME")
 
-
     @property
     def METRICS_API_URL(self) -> str:
         return self._get_required("METRICS_API_URL")

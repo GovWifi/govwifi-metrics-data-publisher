@@ -25,10 +25,7 @@ RUN pip install --user --no-cache-dir .[dev]
 ENV PATH=/root/.local/bin:$PATH
 
 # Run linting and tests
-RUN flake8 metpub tests && \
-    black --check metpub tests && \
-    isort --check-only metpub tests && \
-    pytest tests/
+CMD ["sh", "-c", "flake8 metpub tests && black --check metpub tests && isort --check-only metpub tests && pytest tests/"]
 
 # ==========================================
 # Production Stage
