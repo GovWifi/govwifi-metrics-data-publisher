@@ -1,0 +1,26 @@
+name: Docker Lint & Test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  docker-test:
+    name: Build & Test (Docker)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and Run Tests in Docker
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: test
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
