@@ -30,6 +30,7 @@ dev = [
 [project.scripts]
 metpub = "metpub.cli:main"
 recover = "metpub.recover:main"
+recover_and_publish = "metpub.recover_and_publish:main"
 
 [tool.setuptools]
 packages = ["metpub"]

@@ -29,6 +29,34 @@ def parse_args(args=None):
     return parser.parse_args(args)
 
 
+def publish_metrics(
+    json_path: str,
+    hyper_path: str,
+    table_name: str,
+    year: int,
+    month: int | None = None,
+) -> None:
+    """Converts a JSON metrics file to a Hyper extract and publishes it to
+    Tableau Cloud.
+    """
+    convert_json_to_hyper(
+        json_path=json_path,
+        hyper_path=hyper_path,
+        table_name=table_name,
+    )
+
+    publish_hyper_extract(
+        hyper_path=hyper_path,
+        token_name=config.TOKEN_NAME,
+        token_value=config.TOKEN_VALUE,
+        site_id=config.SITE_ID,
+        server_url=config.SERVER_URL,
+        project_name=config.PROJECT_NAME,
+        year=year,
+        month=month,
+    )
+
+
 def main(args=None) -> None:
     print("Starting GovWifi Metrics Data Publisher...")
 
@@ -84,22 +112,12 @@ def main(args=None) -> None:
                 hyper_path = f"{year}_govwifi_data.hyper"
 
     try:
-        # Step 4: Convert JSON to Hyper
-        convert_json_to_hyper(
+        publish_metrics(
             json_path=json_path,
             hyper_path=hyper_path,
             table_name=config.TABLE_NAME,
-        )
-
-        # Step 5: Publish to Tableau
-        publish_hyper_extract(
-            hyper_path=hyper_path,
-            token_name=config.TOKEN_NAME,
-            token_value=config.TOKEN_VALUE,
-            site_id=config.SITE_ID,
-            server_url=config.SERVER_URL,
-            project_name=config.PROJECT_NAME,
-            datasource_name=config.DATASOURCE_NAME,
+            year=year,
+            month=month,
         )
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)

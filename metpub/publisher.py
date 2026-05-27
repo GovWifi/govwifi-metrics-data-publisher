@@ -8,9 +8,15 @@ def publish_hyper_extract(
     site_id: str,
     server_url: str,
     project_name: str,
-    datasource_name: str,
+    year: int,
+    month: int | None = None,
 ) -> None:
     """Authenticates to Tableau Cloud and publishes a Hyper extract."""
+    if month is not None:
+        datasource_name = f"{year}-{month:02d} GovWifi Data"
+    else:
+        datasource_name = f"{year} GovWifi Data"
+
     print(f"Connecting to Tableau Cloud at {server_url}...")
     tableau_auth = TSC.PersonalAccessTokenAuth(token_name, token_value, site_id)
     server = TSC.Server(server_url, use_server_version=True)

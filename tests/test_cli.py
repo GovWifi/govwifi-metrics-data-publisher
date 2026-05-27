@@ -23,7 +23,6 @@ def test_cli_success_defaults(mock_config, mock_convert, mock_publish, tmp_path)
     mock_config.SITE_ID = "test-site"
     mock_config.SERVER_URL = "https://server"
     mock_config.PROJECT_NAME = "test-project"
-    mock_config.DATASOURCE_NAME = "test-ds"
 
     current_year = datetime.now().year
     expected_json = f"{current_year}_govwifi_data.json"
@@ -46,7 +45,8 @@ def test_cli_success_defaults(mock_config, mock_convert, mock_publish, tmp_path)
             site_id="test-site",
             server_url="https://server",
             project_name="test-project",
-            datasource_name="test-ds",
+            year=current_year,
+            month=None,
         )
 
 
@@ -61,7 +61,6 @@ def test_cli_success_with_args(mock_config, mock_convert, mock_publish, tmp_path
     mock_config.SITE_ID = "test-site"
     mock_config.SERVER_URL = "https://server"
     mock_config.PROJECT_NAME = "test-project"
-    mock_config.DATASOURCE_NAME = "test-ds"
 
     test_args = ["--year", "2025", "--month", "9"]
 
@@ -82,7 +81,8 @@ def test_cli_success_with_args(mock_config, mock_convert, mock_publish, tmp_path
             site_id="test-site",
             server_url="https://server",
             project_name="test-project",
-            datasource_name="test-ds",
+            year=2025,
+            month=9,
         )
 
 
@@ -96,7 +96,6 @@ def test_cli_arg_precedence_over_env(mock_config, mock_convert, mock_publish):
     mock_config.SITE_ID = "test-site"
     mock_config.SERVER_URL = "https://server"
     mock_config.PROJECT_NAME = "test-project"
-    mock_config.DATASOURCE_NAME = "test-ds"
 
     test_args = ["--year", "2027"]
 

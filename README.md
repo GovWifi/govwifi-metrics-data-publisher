@@ -51,7 +51,6 @@ The application uses environment variables for configuration, which can be store
 | **`SITE_ID`** | *Required* | - | The Tableau Cloud Site ID / Content URL. |
 | **`SERVER_URL`** | *Required* | - | The base URL of the Tableau Cloud server (e.g., `https://prod-uk-a.online.tableau.com`). |
 | **`PROJECT_NAME`** | *Required* | - | Target project folder in Tableau Cloud where the data source resides. |
-| **`DATASOURCE_NAME`**| *Required* | - | The name of the published Data Source in Tableau Cloud. |
 | **`JSON_FILE_PATH`** | *Optional* | `<year>_govwifi_data.json` | Path to the source JSON metrics file. Dynamically defaults to using the current/resolved year. |
 | **`HYPER_FILE_PATH`**| *Optional* | `<year>_govwifi_data.hyper`| Destination path for the generated `.hyper` extract. Dynamically defaults to using the current calendar year. |
 | **`TABLE_NAME`** | *Optional* | `Extract` | The table name inside the Hyper extract. **Must be set to `Extract` for standard single-table extracts (see important note below).** |
