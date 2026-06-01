@@ -87,4 +87,3 @@ def test_config_environment():
     with patch.dict(os.environ, {"ENVIRONMENT_NAME": ""}, clear=True):
         config = Config()
         assert config.ENVIRONMENT == "Development"
-

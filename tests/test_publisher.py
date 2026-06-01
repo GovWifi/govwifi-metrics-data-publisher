@@ -1,5 +1,5 @@
-from unittest.mock import MagicMock, patch
 import os
+from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -162,4 +162,3 @@ def test_publish_hyper_extract_explicit_environment(mock_tsc):
     mock_tsc.DatasourceItem.assert_called_once_with(
         "proj-123", name="2026-05 Staging GovWifi Data"
     )
-
