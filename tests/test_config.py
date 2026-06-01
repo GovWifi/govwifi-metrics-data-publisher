@@ -60,3 +60,31 @@ def test_config_required_present():
         config = Config()
         assert config.TOKEN_NAME == "my-token"
         assert config.METRICS_API_URL == "http://api.local"
+
+
+def test_config_environment():
+    # 1. Default (when not present)
+    with patch.dict(os.environ, {}, clear=True):
+        config = Config()
+        assert config.ENVIRONMENT == "Development"
+
+    # 2. Custom value (e.g. production -> Production)
+    with patch.dict(os.environ, {"ENVIRONMENT_NAME": "production"}, clear=True):
+        config = Config()
+        assert config.ENVIRONMENT == "Production"
+
+    # 3. Another custom value (e.g. staging -> Staging)
+    with patch.dict(os.environ, {"ENVIRONMENT_NAME": "staging"}, clear=True):
+        config = Config()
+        assert config.ENVIRONMENT == "Staging"
+
+    # 4. A generic custom environment name (e.g. preview -> Preview)
+    with patch.dict(os.environ, {"ENVIRONMENT_NAME": "preview"}, clear=True):
+        config = Config()
+        assert config.ENVIRONMENT == "Preview"
+
+    # 5. Empty value -> falls back to Development
+    with patch.dict(os.environ, {"ENVIRONMENT_NAME": ""}, clear=True):
+        config = Config()
+        assert config.ENVIRONMENT == "Development"
+

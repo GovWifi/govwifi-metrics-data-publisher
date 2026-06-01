@@ -47,6 +47,7 @@ def test_cli_success_defaults(mock_config, mock_convert, mock_publish, tmp_path)
             project_name="test-project",
             year=current_year,
             month=None,
+            environment=None,
         )
 
 
@@ -83,6 +84,7 @@ def test_cli_success_with_args(mock_config, mock_convert, mock_publish, tmp_path
             project_name="test-project",
             year=2025,
             month=9,
+            environment=None,
         )
 
 

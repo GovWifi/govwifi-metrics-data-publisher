@@ -35,6 +35,7 @@ def publish_metrics(
     table_name: str,
     year: int,
     month: int | None = None,
+    environment: str | None = None,
 ) -> None:
     """Converts a JSON metrics file to a Hyper extract and publishes it to
     Tableau Cloud.
@@ -54,6 +55,7 @@ def publish_metrics(
         project_name=config.PROJECT_NAME,
         year=year,
         month=month,
+        environment=environment,
     )
 
 
