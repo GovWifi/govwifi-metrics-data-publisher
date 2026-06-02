@@ -10,6 +10,13 @@ load_dotenv()
 class Config:
 
     @property
+    def ENVIRONMENT(self) -> str:
+        raw_env = os.environ.get("ENVIRONMENT_NAME", "development")
+        if not raw_env:
+            raw_env = "development"
+        return raw_env.title()
+
+    @property
     def JSON_FILE_PATH(self) -> str:
         current_year = datetime.now().year
         return os.environ.get("JSON_FILE_PATH", f"{current_year}_govwifi_data.json")

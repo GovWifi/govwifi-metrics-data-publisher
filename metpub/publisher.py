@@ -1,5 +1,7 @@
 import tableauserverclient as TSC
 
+from metpub.config import config
+
 
 def publish_hyper_extract(
     hyper_path: str,
@@ -10,12 +12,16 @@ def publish_hyper_extract(
     project_name: str,
     year: int,
     month: int | None = None,
+    environment: str | None = None,
 ) -> None:
     """Authenticates to Tableau Cloud and publishes a Hyper extract."""
+    if not environment:
+        environment = config.ENVIRONMENT
+
     if month is not None:
-        datasource_name = f"{year}-{month:02d} GovWifi Data"
+        datasource_name = f"{year}-{month:02d} {environment} GovWifi Data"
     else:
-        datasource_name = f"{year} GovWifi Data"
+        datasource_name = f"{year} {environment} GovWifi Data"
 
     print(f"Connecting to Tableau Cloud at {server_url}...")
     tableau_auth = TSC.PersonalAccessTokenAuth(token_name, token_value, site_id)
