@@ -5,7 +5,7 @@ import urllib.error
 import urllib.request
 from datetime import datetime
 
-from metpub.config import config
+from metpub.config import get_config
 
 
 def parse_args(args=None):
@@ -37,6 +37,7 @@ def recover_metrics(
     Returns the resolved output path.
     """
     # Load and validate API configurations
+    config = get_config()
     try:
         api_url = config.METRICS_API_URL
         api_key = config.METRICS_API_KEY

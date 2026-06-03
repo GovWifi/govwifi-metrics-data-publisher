@@ -3,9 +3,6 @@ from datetime import datetime
 
 from dotenv import load_dotenv
 
-# Load environment variables from .env file if it exists
-load_dotenv()
-
 
 class Config:
 
@@ -65,5 +62,8 @@ class Config:
         return value
 
 
-# Singleton instance to be imported across the app
-config = Config()
+def get_config() -> Config:
+    # Load environment variables from .env file if it exists
+    load_dotenv()
+
+    return Config()
