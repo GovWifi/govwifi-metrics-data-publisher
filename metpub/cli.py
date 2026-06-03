@@ -3,7 +3,7 @@ import os
 import sys
 from datetime import datetime
 
-from metpub.config import config
+from metpub.config import get_config
 from metpub.converter import convert_json_to_hyper
 from metpub.publisher import publish_hyper_extract
 
@@ -40,6 +40,8 @@ def publish_metrics(
     """Converts a JSON metrics file to a Hyper extract and publishes it to
     Tableau Cloud.
     """
+    config = get_config()
+
     convert_json_to_hyper(
         json_path=json_path,
         hyper_path=hyper_path,
@@ -61,6 +63,8 @@ def publish_metrics(
 
 def main(args=None) -> None:
     print("Starting GovWifi Metrics Data Publisher...")
+
+    config = get_config()
 
     # Step 1: Parse arguments and resolve values
     parsed_args = parse_args(args)

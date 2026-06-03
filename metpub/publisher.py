@@ -1,6 +1,6 @@
 import tableauserverclient as TSC
 
-from metpub.config import config
+from metpub.config import get_config
 
 
 def publish_hyper_extract(
@@ -16,6 +16,7 @@ def publish_hyper_extract(
 ) -> None:
     """Authenticates to Tableau Cloud and publishes a Hyper extract."""
     if not environment:
+        config = get_config()
         environment = config.ENVIRONMENT
 
     if month is not None:
