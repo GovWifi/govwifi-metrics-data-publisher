@@ -103,6 +103,7 @@ def main(args=None) -> None:
             table_name=config.TABLE_NAME,
             year=year,
             month=month,
+            environment=config.ENVIRONMENT,
         )
         print("\n--- Synchronization Successful! ---")
     except Exception as e:

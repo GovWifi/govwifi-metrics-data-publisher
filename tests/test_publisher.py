@@ -22,17 +22,18 @@ def test_publish_hyper_extract_success(mock_tsc):
     mock_published_ds.id = "ds-456"
     mock_server.datasources.publish.return_value = mock_published_ds
 
-    # Call the function
-    publish_hyper_extract(
-        hyper_path="test.hyper",
-        token_name="token_name",
-        token_value="token_value",
-        site_id="site_id",
-        server_url="http://test.server",
-        project_name="Test Project",
-        year=2026,
-        month=5,
-    )
+    # Call the function without environment — defaults to "Development"
+    with patch.dict(os.environ, {}, clear=True):
+        publish_hyper_extract(
+            hyper_path="test.hyper",
+            token_name="token_name",
+            token_value="token_value",
+            site_id="site_id",
+            server_url="http://test.server",
+            project_name="Test Project",
+            year=2026,
+            month=5,
+        )
 
     # Assertions
     mock_tsc.PersonalAccessTokenAuth.assert_called_once_with(
@@ -65,16 +66,17 @@ def test_publish_hyper_extract_success_no_month(mock_tsc):
     mock_published_ds.id = "ds-456"
     mock_server.datasources.publish.return_value = mock_published_ds
 
-    # Call the function with no month
-    publish_hyper_extract(
-        hyper_path="test.hyper",
-        token_name="token_name",
-        token_value="token_value",
-        site_id="site_id",
-        server_url="http://test.server",
-        project_name="Test Project",
-        year=2026,
-    )
+    # Call the function with no month — defaults to "Development"
+    with patch.dict(os.environ, {}, clear=True):
+        publish_hyper_extract(
+            hyper_path="test.hyper",
+            token_name="token_name",
+            token_value="token_value",
+            site_id="site_id",
+            server_url="http://test.server",
+            project_name="Test Project",
+            year=2026,
+        )
 
     # Assertions
     mock_tsc.DatasourceItem.assert_called_once_with(
