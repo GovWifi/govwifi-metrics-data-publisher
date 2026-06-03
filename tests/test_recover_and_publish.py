@@ -39,6 +39,7 @@ def test_sync_success_defaults(mock_config, mock_recover, mock_publish):
         table_name="Extract",
         year=current_year,
         month=None,
+        environment=mock_config.ENVIRONMENT,
     )
 
 
@@ -68,6 +69,7 @@ def test_sync_success_with_args(mock_config, mock_recover, mock_publish):
         table_name="Extract",
         year=2025,
         month=6,
+        environment=mock_config.ENVIRONMENT,
     )
 
 

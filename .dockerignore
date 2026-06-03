@@ -1,0 +1,42 @@
+# Version control
+.git
+.gitignore
+
+# CI/CD and GitHub
+.github
+
+# Python virtual environments
+.venv
+venv
+env
+
+# Python caches and build artifacts
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.egg-info
+build
+dist
+.Python
+.pytest_cache
+.coverage
+
+# Environment and secrets
+.env
+.env.sample
+
+# IDE and editor files
+.vscode
+.idea
+*.swp
+*.swo
+
+# Data files (generated at runtime)
+*.hyper
+*.json
+
+# Documentation
+README.md
+LICENSE
+Makefile

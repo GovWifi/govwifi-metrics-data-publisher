@@ -120,6 +120,7 @@ def main(args=None) -> None:
             table_name=config.TABLE_NAME,
             year=year,
             month=month,
+            environment=config.ENVIRONMENT,
         )
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
