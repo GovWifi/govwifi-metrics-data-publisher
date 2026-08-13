@@ -55,14 +55,6 @@ class Config:
     def METRICS_API_KEY(self) -> str:
         return self._get_required("METRICS_API_KEY")
 
-    @property
-    def TOKEN_EXPIRES_AT(self) -> str:
-        """ISO date (YYYY-MM-DD) the Tableau PAT expires. Optional: empty
-        until ops adds it to the `govwifi/metrics-data-publisher/tableau`
-        secret, in which case the expiry check is skipped.
-        """
-        return os.environ.get("TOKEN_EXPIRES_AT", "")
-
     def _get_required(self, key: str) -> str:
         value = os.environ.get(key)
         if not value:
