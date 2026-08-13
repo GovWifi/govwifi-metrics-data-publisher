@@ -6,6 +6,7 @@ from datetime import datetime
 from metpub.cli import publish_metrics
 from metpub.config import get_config
 from metpub.recover import recover_metrics
+from metpub.token_health import check_token_expiry
 
 
 def parse_args(args=None):
@@ -34,6 +35,9 @@ def main(args=None) -> None:
     print("Starting GovWifi Metrics Data Recovery and Publisher...")
 
     config = get_config()
+
+    # Step 0: Check how long the Tableau PAT has left before it expires
+    check_token_expiry(config.TOKEN_EXPIRES_AT)
 
     # Step 1: Parse arguments and resolve values
     parsed_args = parse_args(args)
