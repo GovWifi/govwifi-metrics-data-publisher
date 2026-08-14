@@ -4,7 +4,7 @@ import sys
 from datetime import datetime
 
 from metpub.cli import publish_metrics
-from metpub.config import config
+from metpub.config import get_config
 from metpub.recover import recover_metrics
 
 
@@ -32,6 +32,8 @@ def parse_args(args=None):
 
 def main(args=None) -> None:
     print("Starting GovWifi Metrics Data Recovery and Publisher...")
+
+    config = get_config()
 
     # Step 1: Parse arguments and resolve values
     parsed_args = parse_args(args)
@@ -103,6 +105,7 @@ def main(args=None) -> None:
             table_name=config.TABLE_NAME,
             year=year,
             month=month,
+            environment=config.ENVIRONMENT,
         )
         print("\n--- Synchronization Successful! ---")
     except Exception as e:

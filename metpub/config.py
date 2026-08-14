@@ -3,11 +3,15 @@ from datetime import datetime
 
 from dotenv import load_dotenv
 
-# Load environment variables from .env file if it exists
-load_dotenv()
-
 
 class Config:
+
+    @property
+    def ENVIRONMENT(self) -> str:
+        raw_env = os.environ.get("ENVIRONMENT_NAME", "development")
+        if not raw_env:
+            raw_env = "development"
+        return raw_env.title()
 
     @property
     def JSON_FILE_PATH(self) -> str:
@@ -58,5 +62,8 @@ class Config:
         return value
 
 
-# Singleton instance to be imported across the app
-config = Config()
+def get_config() -> Config:
+    # Load environment variables from .env file if it exists
+    load_dotenv()
+
+    return Config()

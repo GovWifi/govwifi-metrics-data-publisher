@@ -14,9 +14,10 @@ def raise_system_exit(*args, **kwargs):
 
 
 @patch("metpub.recover.urllib.request.urlopen")
-@patch("metpub.recover.config")
-def test_recover_success_defaults(mock_config, mock_urlopen, tmp_path):
+@patch("metpub.recover.get_config")
+def test_recover_success_defaults(mock_get_config, mock_urlopen, tmp_path):
     # Setup mock config
+    mock_config = mock_get_config.return_value
     mock_config.METRICS_API_URL = "https://api.example.com"
     mock_config.METRICS_API_KEY = "test-api-key"
 
@@ -52,8 +53,9 @@ def test_recover_success_defaults(mock_config, mock_urlopen, tmp_path):
 
 
 @patch("metpub.recover.urllib.request.urlopen")
-@patch("metpub.recover.config")
-def test_recover_success_with_args(mock_config, mock_urlopen, tmp_path):
+@patch("metpub.recover.get_config")
+def test_recover_success_with_args(mock_get_config, mock_urlopen, tmp_path):
+    mock_config = mock_get_config.return_value
     mock_config.METRICS_API_URL = "https://api.example.com"
     mock_config.METRICS_API_KEY = "test-api-key"
 
@@ -90,8 +92,8 @@ def test_recover_success_with_args(mock_config, mock_urlopen, tmp_path):
         os.chdir(current_dir)
 
 
-@patch("metpub.recover.config")
-def test_recover_invalid_month(mock_config, capsys):
+@patch("metpub.recover.get_config")
+def test_recover_invalid_month(mock_get_config, capsys):
     test_args = ["--month", "13"]
     with patch("sys.exit", side_effect=raise_system_exit) as mock_exit:
         with pytest.raises(SystemExit) as exc_info:
@@ -103,8 +105,9 @@ def test_recover_invalid_month(mock_config, capsys):
         assert "Error: Month must be between 1 and 12, got '13'" in captured.err
 
 
-@patch("metpub.recover.config")
-def test_recover_missing_config(mock_config, capsys):
+@patch("metpub.recover.get_config")
+def test_recover_missing_config(mock_get_config, capsys):
+    mock_config = mock_get_config.return_value
     # Setup METRICS_API_URL to raise ValueError using PropertyMock
     type(mock_config).METRICS_API_URL = PropertyMock(
         side_effect=ValueError("Missing required environment variable: METRICS_API_URL")
@@ -124,8 +127,9 @@ def test_recover_missing_config(mock_config, capsys):
 
 
 @patch("metpub.recover.urllib.request.urlopen")
-@patch("metpub.recover.config")
-def test_recover_http_error(mock_config, mock_urlopen, capsys):
+@patch("metpub.recover.get_config")
+def test_recover_http_error(mock_get_config, mock_urlopen, capsys):
+    mock_config = mock_get_config.return_value
     mock_config.METRICS_API_URL = "https://api.example.com"
     mock_config.METRICS_API_KEY = "test-api-key"
 
@@ -149,8 +153,9 @@ def test_recover_http_error(mock_config, mock_urlopen, capsys):
 
 
 @patch("metpub.recover.urllib.request.urlopen")
-@patch("metpub.recover.config")
-def test_recover_url_error(mock_config, mock_urlopen, capsys):
+@patch("metpub.recover.get_config")
+def test_recover_url_error(mock_get_config, mock_urlopen, capsys):
+    mock_config = mock_get_config.return_value
     mock_config.METRICS_API_URL = "https://api.example.com"
     mock_config.METRICS_API_KEY = "test-api-key"
 
@@ -167,8 +172,9 @@ def test_recover_url_error(mock_config, mock_urlopen, capsys):
 
 
 @patch("metpub.recover.urllib.request.urlopen")
-@patch("metpub.recover.config")
-def test_recover_general_exception(mock_config, mock_urlopen, capsys):
+@patch("metpub.recover.get_config")
+def test_recover_general_exception(mock_get_config, mock_urlopen, capsys):
+    mock_config = mock_get_config.return_value
     mock_config.METRICS_API_URL = "https://api.example.com"
     mock_config.METRICS_API_KEY = "test-api-key"
 
@@ -185,8 +191,9 @@ def test_recover_general_exception(mock_config, mock_urlopen, capsys):
 
 
 @patch("metpub.recover.urllib.request.urlopen")
-@patch("metpub.recover.config")
-def test_recover_arg_precedence_over_env(mock_config, mock_urlopen, tmp_path):
+@patch("metpub.recover.get_config")
+def test_recover_arg_precedence_over_env(mock_get_config, mock_urlopen, tmp_path):
+    mock_config = mock_get_config.return_value
     mock_config.METRICS_API_URL = "https://api.example.com"
     mock_config.METRICS_API_KEY = "test-api-key"
 

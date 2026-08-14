@@ -14,9 +14,10 @@ def raise_system_exit(*args, **kwargs):
 
 @patch("metpub.cli.publish_hyper_extract")
 @patch("metpub.cli.convert_json_to_hyper")
-@patch("metpub.cli.config")
-def test_cli_success_defaults(mock_config, mock_convert, mock_publish, tmp_path):
+@patch("metpub.cli.get_config")
+def test_cli_success_defaults(mock_get_config, mock_convert, mock_publish, tmp_path):
     # Setup mock config properties
+    mock_config = mock_get_config.return_value
     mock_config.TABLE_NAME = "Extract"
     mock_config.TOKEN_NAME = "test-token"
     mock_config.TOKEN_VALUE = "test-value"
@@ -47,14 +48,16 @@ def test_cli_success_defaults(mock_config, mock_convert, mock_publish, tmp_path)
             project_name="test-project",
             year=current_year,
             month=None,
+            environment=mock_config.ENVIRONMENT,
         )
 
 
 @patch("metpub.cli.publish_hyper_extract")
 @patch("metpub.cli.convert_json_to_hyper")
-@patch("metpub.cli.config")
-def test_cli_success_with_args(mock_config, mock_convert, mock_publish, tmp_path):
+@patch("metpub.cli.get_config")
+def test_cli_success_with_args(mock_get_config, mock_convert, mock_publish, tmp_path):
     # Setup mock config properties
+    mock_config = mock_get_config.return_value
     mock_config.TABLE_NAME = "Extract"
     mock_config.TOKEN_NAME = "test-token"
     mock_config.TOKEN_VALUE = "test-value"
@@ -83,13 +86,15 @@ def test_cli_success_with_args(mock_config, mock_convert, mock_publish, tmp_path
             project_name="test-project",
             year=2025,
             month=9,
+            environment=mock_config.ENVIRONMENT,
         )
 
 
 @patch("metpub.cli.publish_hyper_extract")
 @patch("metpub.cli.convert_json_to_hyper")
-@patch("metpub.cli.config")
-def test_cli_arg_precedence_over_env(mock_config, mock_convert, mock_publish):
+@patch("metpub.cli.get_config")
+def test_cli_arg_precedence_over_env(mock_get_config, mock_convert, mock_publish):
+    mock_config = mock_get_config.return_value
     mock_config.TABLE_NAME = "Extract"
     mock_config.TOKEN_NAME = "test-token"
     mock_config.TOKEN_VALUE = "test-value"

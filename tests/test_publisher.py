@@ -5,9 +5,13 @@ import pytest
 from metpub.publisher import publish_hyper_extract
 
 
+@patch("metpub.publisher.get_config")
 @patch("metpub.publisher.TSC")
-def test_publish_hyper_extract_success(mock_tsc):
+def test_publish_hyper_extract_success(mock_tsc, mock_get_config):
     # Setup mocks
+    mock_config = mock_get_config.return_value
+    mock_config.ENVIRONMENT = "Development"
+
     mock_server = MagicMock()
     mock_tsc.Server.return_value = mock_server
 
@@ -21,7 +25,7 @@ def test_publish_hyper_extract_success(mock_tsc):
     mock_published_ds.id = "ds-456"
     mock_server.datasources.publish.return_value = mock_published_ds
 
-    # Call the function
+    # Call the function without environment — defaults to "Development"
     publish_hyper_extract(
         hyper_path="test.hyper",
         token_name="token_name",
@@ -43,14 +47,18 @@ def test_publish_hyper_extract_success(mock_tsc):
     mock_server.auth.sign_in.assert_called_once()
     mock_server.projects.get.assert_called_once()
     mock_tsc.DatasourceItem.assert_called_once_with(
-        "proj-123", name="2026-05 GovWifi Data"
+        "proj-123", name="2026-05 Development GovWifi Data"
     )
     mock_server.datasources.publish.assert_called_once()
 
 
+@patch("metpub.publisher.get_config")
 @patch("metpub.publisher.TSC")
-def test_publish_hyper_extract_success_no_month(mock_tsc):
+def test_publish_hyper_extract_success_no_month(mock_tsc, mock_get_config):
     # Setup mocks
+    mock_config = mock_get_config.return_value
+    mock_config.ENVIRONMENT = "Development"
+
     mock_server = MagicMock()
     mock_tsc.Server.return_value = mock_server
 
@@ -64,7 +72,7 @@ def test_publish_hyper_extract_success_no_month(mock_tsc):
     mock_published_ds.id = "ds-456"
     mock_server.datasources.publish.return_value = mock_published_ds
 
-    # Call the function with no month
+    # Call the function with no month — defaults to "Development"
     publish_hyper_extract(
         hyper_path="test.hyper",
         token_name="token_name",
@@ -77,7 +85,7 @@ def test_publish_hyper_extract_success_no_month(mock_tsc):
 
     # Assertions
     mock_tsc.DatasourceItem.assert_called_once_with(
-        "proj-123", name="2026 GovWifi Data"
+        "proj-123", name="2026 Development GovWifi Data"
     )
     mock_server.datasources.publish.assert_called_once()
 
@@ -103,3 +111,64 @@ def test_publish_hyper_extract_project_not_found(mock_tsc):
             year=2026,
             month=5,
         )
+
+
+@patch("metpub.publisher.get_config")
+@patch("metpub.publisher.TSC")
+def test_publish_hyper_extract_custom_environment(mock_tsc, mock_get_config):
+    # Setup mocks
+    mock_config = mock_get_config.return_value
+    mock_config.ENVIRONMENT = "Production"
+
+    mock_server = MagicMock()
+    mock_tsc.Server.return_value = mock_server
+    mock_project = MagicMock()
+    mock_project.id = "proj-123"
+    mock_server.projects.get.return_value = ([mock_project], None)
+    mock_published_ds = MagicMock()
+    mock_published_ds.id = "ds-456"
+    mock_server.datasources.publish.return_value = mock_published_ds
+
+    publish_hyper_extract(
+        hyper_path="test.hyper",
+        token_name="token_name",
+        token_value="token_value",
+        site_id="site_id",
+        server_url="http://test.server",
+        project_name="Test Project",
+        year=2026,
+        month=5,
+    )
+
+    mock_tsc.DatasourceItem.assert_called_once_with(
+        "proj-123", name="2026-05 Production GovWifi Data"
+    )
+
+
+@patch("metpub.publisher.TSC")
+def test_publish_hyper_extract_explicit_environment(mock_tsc):
+    # Setup mocks
+    mock_server = MagicMock()
+    mock_tsc.Server.return_value = mock_server
+    mock_project = MagicMock()
+    mock_project.id = "proj-123"
+    mock_server.projects.get.return_value = ([mock_project], None)
+    mock_published_ds = MagicMock()
+    mock_published_ds.id = "ds-456"
+    mock_server.datasources.publish.return_value = mock_published_ds
+
+    publish_hyper_extract(
+        hyper_path="test.hyper",
+        token_name="token_name",
+        token_value="token_value",
+        site_id="site_id",
+        server_url="http://test.server",
+        project_name="Test Project",
+        year=2026,
+        month=5,
+        environment="Staging",
+    )
+
+    mock_tsc.DatasourceItem.assert_called_once_with(
+        "proj-123", name="2026-05 Staging GovWifi Data"
+    )

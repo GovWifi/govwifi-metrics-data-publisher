@@ -14,9 +14,10 @@ def raise_system_exit(*args, **kwargs):
 
 @patch("metpub.recover_and_publish.publish_metrics")
 @patch("metpub.recover_and_publish.recover_metrics")
-@patch("metpub.recover_and_publish.config")
-def test_sync_success_defaults(mock_config, mock_recover, mock_publish):
+@patch("metpub.recover_and_publish.get_config")
+def test_sync_success_defaults(mock_get_config, mock_recover, mock_publish):
     # Setup mock config
+    mock_config = mock_get_config.return_value
     mock_config.TABLE_NAME = "Extract"
     mock_recover.return_value = "2026_govwifi_data.json"
 
@@ -39,13 +40,15 @@ def test_sync_success_defaults(mock_config, mock_recover, mock_publish):
         table_name="Extract",
         year=current_year,
         month=None,
+        environment=mock_config.ENVIRONMENT,
     )
 
 
 @patch("metpub.recover_and_publish.publish_metrics")
 @patch("metpub.recover_and_publish.recover_metrics")
-@patch("metpub.recover_and_publish.config")
-def test_sync_success_with_args(mock_config, mock_recover, mock_publish):
+@patch("metpub.recover_and_publish.get_config")
+def test_sync_success_with_args(mock_get_config, mock_recover, mock_publish):
+    mock_config = mock_get_config.return_value
     mock_config.TABLE_NAME = "Extract"
     mock_recover.return_value = "2025_06_govwifi_data.json"
 
@@ -68,6 +71,7 @@ def test_sync_success_with_args(mock_config, mock_recover, mock_publish):
         table_name="Extract",
         year=2025,
         month=6,
+        environment=mock_config.ENVIRONMENT,
     )
 
 
