@@ -6,6 +6,11 @@ VALUE_ALIASES = {
     "monthly-rolling-window-total-roaming-users": "Roaming Users",
     "month-to-date-total-active-users": "Active Users (MTD)",
     "month-to-date-total-roaming-users": "Roaming Users (MTD)",
+    "account-health-organisation-count": "Total Organisations",
+    "account-health-orgs-with-less-than-two-admins-count": "Less than Two Admins",
+    "account-health-orgs-with-dormant-admins-count": "With Dormant Admins",
+    "account-health-orgs-have-no-active-admins-count": "No Active Admins",
+    "account-health-orgs-with-no-signed-mou-count": "No Signed MoU",
 }
 
 

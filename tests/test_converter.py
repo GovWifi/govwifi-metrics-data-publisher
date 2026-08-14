@@ -36,3 +36,33 @@ def test_transform_dataframe_missing_name_col():
 
     assert list(transformed_df.columns) == ["other_col"]
     assert len(transformed_df) == 3
+
+
+def test_transform_dataframe_applies_account_health_aliases():
+    # Setup test data
+    data = {
+        "name": [
+            "account-health-organisation-count",
+            "account-health-orgs-with-less-than-two-admins-count",
+            "account-health-orgs-with-dormant-admins-count",
+            "account-health-orgs-have-no-active-admins-count",
+            "account-health-orgs-with-no-signed-mou-count",
+        ],
+        "value": [10, 20, 30, 40, 50],
+    }
+    df = pd.DataFrame(data)
+
+    # Transform
+    transformed_df = transform_dataframe(df)
+
+    # Verify
+    expected_names = [
+        "Total Organisations",
+        "Less than Two Admins",
+        "With Dormant Admins",
+        "No Active Admins",
+        "No Signed MoU",
+    ]
+
+    assert list(transformed_df["name"]) == expected_names
+    assert list(transformed_df["value"]) == [10, 20, 30, 40, 50]
