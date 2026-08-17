@@ -47,8 +47,9 @@ def test_transform_dataframe_applies_account_health_aliases():
             "account-health-orgs-with-dormant-admins-count",
             "account-health-orgs-have-no-active-admins-count",
             "account-health-orgs-with-no-signed-mou-count",
+            "account-health-orgs-with-no-physical-address-for-ip-count",
         ],
-        "value": [10, 20, 30, 40, 50],
+        "value": [10, 20, 30, 40, 50, 60],
     }
     df = pd.DataFrame(data)
 
@@ -62,7 +63,8 @@ def test_transform_dataframe_applies_account_health_aliases():
         "With Dormant Admins",
         "No Active Admins",
         "No Signed MoU",
+        "IPs without physical addresses",
     ]
 
     assert list(transformed_df["name"]) == expected_names
-    assert list(transformed_df["value"]) == [10, 20, 30, 40, 50]
+    assert list(transformed_df["value"]) == [10, 20, 30, 40, 50, 60]
