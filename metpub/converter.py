@@ -11,7 +11,9 @@ VALUE_ALIASES = {
     "account-health-orgs-with-dormant-admins-count": "With Dormant Admins",
     "account-health-orgs-have-no-active-admins-count": "No Active Admins",
     "account-health-orgs-with-no-signed-mou-count": "No Signed MoU",
-    "account-health-orgs-with-no-physical-address-for-ip-count": "IPs without physical addresses",
+    "account-health-orgs-with-no-physical-address-for-ip-count": (
+        "IPs without physical addresses"
+    ),
 }
 
 
