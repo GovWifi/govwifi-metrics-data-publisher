@@ -14,6 +14,8 @@ VALUE_ALIASES = {
     "account-health-orgs-with-no-physical-address-for-ip-count": (
         "IPs without physical addresses"
     ),
+    "service-report-active-tls-user-rolling-count": "Active TLS Users",
+    "service-report-active-tls-user-mtd-count": "Active TLS Users (MTD)",
 }
 
 

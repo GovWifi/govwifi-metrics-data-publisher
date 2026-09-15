@@ -68,3 +68,24 @@ def test_transform_dataframe_applies_account_health_aliases():
 
     assert list(transformed_df["name"]) == expected_names
     assert list(transformed_df["value"]) == [10, 20, 30, 40, 50, 60]
+
+
+def test_transform_dataframe_applies_active_tls_users_aliases():
+    data = {
+        "name": [
+            "service-report-active-tls-user-rolling-count",
+            "service-report-active-tls-user-mtd-count",
+        ],
+        "value": [47073, 12500],
+    }
+    df = pd.DataFrame(data)
+
+    transformed_df = transform_dataframe(df)
+
+    expected_names = [
+        "Active TLS Users",
+        "Active TLS Users (MTD)",
+    ]
+
+    assert list(transformed_df["name"]) == expected_names
+    assert list(transformed_df["value"]) == [47073, 12500]
