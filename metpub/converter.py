@@ -16,6 +16,8 @@ VALUE_ALIASES = {
     ),
     "service-report-active-tls-user-rolling-count": "Active TLS Users",
     "service-report-active-tls-user-mtd-count": "Active TLS Users (MTD)",
+    "service-report-peap-unique-users-rolling-count": "PEAP Unique Users",
+    "service-report-peap-unique-users-mtd-count": "PEAP Unique Users (MTD)",
 }
 
 
