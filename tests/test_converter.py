@@ -110,3 +110,24 @@ def test_transform_dataframe_applies_peap_unique_users_aliases():
 
     assert list(transformed_df["name"]) == expected_names
     assert list(transformed_df["value"]) == [47073, 12500]
+
+
+def test_transform_dataframe_applies_organisations_added_aliases():
+    data = {
+        "name": [
+            "service-report-organisations-addeded-rolling-count",
+            "service-report-organisations-addeded-mtd-count",
+        ],
+        "value": [47073, 12500],
+    }
+    df = pd.DataFrame(data)
+
+    transformed_df = transform_dataframe(df)
+
+    expected_names = [
+        "Organisations Added",
+        "Organisations Added (MTD)",
+    ]
+
+    assert list(transformed_df["name"]) == expected_names
+    assert list(transformed_df["value"]) == [47073, 12500]
