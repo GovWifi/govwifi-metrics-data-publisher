@@ -20,6 +20,8 @@ VALUE_ALIASES = {
     "service-report-peap-unique-users-mtd-count": "PEAP Unique Users (MTD)",
     "service-report-organisations-addeded-rolling-count": "Organisations Added",
     "service-report-organisations-addeded-mtd-count": "Organisations Added (MTD)",
+    "service-report-locations-added-rolling-count": "Locations Added",
+    "service-report-locations-added-mtd-count": "Locations Added (MTD)",
 }
 
 
