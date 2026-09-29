@@ -131,3 +131,24 @@ def test_transform_dataframe_applies_organisations_added_aliases():
 
     assert list(transformed_df["name"]) == expected_names
     assert list(transformed_df["value"]) == [47073, 12500]
+
+
+def test_transform_dataframe_applies_locations_added_aliases():
+    data = {
+        "name": [
+            "service-report-locations-added-rolling-count",
+            "service-report-locations-added-mtd-count",
+        ],
+        "value": [47073, 12500],
+    }
+    df = pd.DataFrame(data)
+
+    transformed_df = transform_dataframe(df)
+
+    expected_names = [
+        "Locations Added",
+        "Locations Added (MTD)",
+    ]
+
+    assert list(transformed_df["name"]) == expected_names
+    assert list(transformed_df["value"]) == [47073, 12500]
