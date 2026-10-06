@@ -15,7 +15,7 @@ VALUE_ALIASES = {
         "IPs without physical addresses"
     ),
     "service-report-active-tls-user-rolling-count": "Active TLS Users",
-    "service-report-active-tls-user-mtd-count": "Active TLS Users (MTD)",
+    "service-report-active-tls-user-mtd-count": "TLS Unique Users",
     "service-report-peap-unique-users-rolling-count": "PEAP Unique Users",
     "service-report-peap-unique-users-mtd-count": "PEAP Unique Users (MTD)",
     "service-report-organisations-addeded-rolling-count": "Organisations Added",

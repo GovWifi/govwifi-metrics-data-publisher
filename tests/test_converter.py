@@ -88,7 +88,7 @@ def test_transform_dataframe_applies_active_tls_users_aliases():
 
     expected_names = [
         "Active TLS Users",
-        "Active TLS Users (MTD)",
+        "TLS Unique Users",
     ]
 
     assert list(transformed_df["name"]) == expected_names
