@@ -44,5 +44,5 @@ profile = "black"
 line_length = 88
 
 [tool.pytest.ini_options]
-addopts = "--cov=metpub --cov-fail-under=88"
+addopts = "--cov=metpub --cov-fail-under=92"
 testpaths = ["tests"]
