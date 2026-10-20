@@ -22,6 +22,12 @@ VALUE_ALIASES = {
     "service-report-organisations-addeded-mtd-count": "Organisations Added (MTD)",
     "service-report-locations-added-rolling-count": "Locations Added",
     "service-report-locations-added-mtd-count": "Locations Added (MTD)",
+    "service-report-end-user-signups-rolling-count": "End User Signups",
+    "service-report-end-user-signups-mtd-count": "End User Signups (MTD)",
+    "service-report-email-signups-rolling-count": "Email Signups",
+    "service-report-email-signups-mtd-count": "Email Signups (MTD)",
+    "service-report-sms-signups-rolling-count": "SMS Signups",
+    "service-report-sms-signups-mtd-count": "SMS Signups (MTD)",
 }
 
 

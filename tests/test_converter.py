@@ -158,6 +158,35 @@ def test_transform_dataframe_applies_locations_added_aliases():
     assert list(transformed_df["value"]) == [47073, 12500]
 
 
+def test_transform_dataframe_applies_user_signups_aliases():
+    data = {
+        "name": [
+            "service-report-end-user-signups-rolling-count",
+            "service-report-end-user-signups-mtd-count",
+            "service-report-email-signups-rolling-count",
+            "service-report-email-signups-mtd-count",
+            "service-report-sms-signups-rolling-count",
+            "service-report-sms-signups-mtd-count",
+        ],
+        "value": [47073, 12500, 30000, 8200, 17073, 4300],
+    }
+    df = pd.DataFrame(data)
+
+    transformed_df = transform_dataframe(df)
+
+    expected_names = [
+        "End User Signups",
+        "End User Signups (MTD)",
+        "Email Signups",
+        "Email Signups (MTD)",
+        "SMS Signups",
+        "SMS Signups (MTD)",
+    ]
+
+    assert list(transformed_df["name"]) == expected_names
+    assert list(transformed_df["value"]) == [47073, 12500, 30000, 8200, 17073, 4300]
+
+
 def test_transform_dataframe_preserves_zero_values():
     """Verify transform_dataframe retains explicit 0 and 0.0 values across aliases."""
     data = {
